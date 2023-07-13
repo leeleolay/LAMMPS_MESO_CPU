@@ -1,0 +1,37 @@
+
+###########################################################################
+
+units           lj
+boundary        p f p
+neighbor        1.0 bin
+neigh_modify	every 1 delay 0 check yes
+atom_style      sphere 
+pair_style      dpd 1.0 1.0 343587 
+comm_modify     mode single vel yes
+
+# ----------------- Atom Definition Section -----------------
+
+read_data       "system.data"
+
+# ----------------- Settings Section -----------------
+#pair_coeff     type-id type-id a0 gamma_C gamma_S cutoff
+pair_coeff      1       1       25 2.0     2.0     1.0
+
+# ----------------- Run Section -----------------
+ 
+ timestep       0.01
+ velocity       all create 1.0 372748 rot yes dist gaussian loop local
+ 
+ thermo         100
+ thermo_style   custom step temp 
+ thermo_modify  flush yes
+ 
+ dump           mydump all custom 100 dump.lammpstrj id type diameter x y z
+ 
+ fix            1 all nve/sphere
+#fix            ywalls all wall/lj126 ylo position T seed gamma_C gamma_S cutoff myvx a0 units box
+ fix            ywall_down all wall/lj126 ylo EDGE 1.0 342387 10 5.0 1.0 -0.5 200 units box
+ fix            ywall_up all wall/lj126 yhi EDGE 1.0 305390 10 5.0 1.0 0.5 200 units box
+ 
+ run            100000
+

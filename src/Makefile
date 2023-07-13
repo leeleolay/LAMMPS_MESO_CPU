@@ -18,10 +18,10 @@ OBJ =   $(SRC:.cpp=.o)
 # System-specific settings
 
 CC =            mpicxx
-CCFLAGS =   -O3 -g -DFFT_NONE -DGZIP -std=c++11
+CCFLAGS =   -O0 -g -DFFT_NONE -DGZIP -std=c++11 #-O3
 DEPFLAGS =	-M
 LINK =	        mpicxx
-LINKFLAGS =	-O3 -g
+LINKFLAGS =	-O0 -g #-O3
 LIBDIR = 
 USRLIB = 
 SYSLIB = #-L$(MKLROOT)/lib/intel64 -lmkl_scalapack_lp64 -lmkl_blacs_intelmpi_lp64 -lmkl_intel_lp64 -liomp5 -lmkl_core -lmkl_intel_thread -lpthread -lm
